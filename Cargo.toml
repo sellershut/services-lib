@@ -29,3 +29,8 @@ sqlx = { version = "*", features = ["runtime-tokio"] }
 [package.metadata.docs.rs]
 all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
+
+[[example]]
+name = "tracing"
+path = "examples/tracing.rs"
+required-features = ["tracing"]

@@ -14,3 +14,13 @@ Configure the infrastructure used by the sellershut platform
 
 - `tracing` - Structured, context-aware logging using [tracing](https://docs.rs/tracing)
 - `postgres` - Configure a postgres database with [sqlx](https://docs.rs/sqlx)
+
+## Examples
+
+Check out the [examples](./examples/) directory for how to setup the services in this crate
+
+```sh
+cargo run --example tracing -F tracing
+```
+> [!NOTE]
+> You need to activate each example's required features

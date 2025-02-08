@@ -18,8 +18,9 @@ url = { version = "2.5.4", features = ["serde"], optional = true }
 
 [features]
 default = []
-tracing = ["dep:tracing", "dep:tracing-subscriber"]
+api = []
 postgres = ["sqlx/postgres", "url/serde"]
+tracing = ["dep:tracing", "dep:tracing-subscriber"]
 url = ["dep:url"]
 
 [dev-dependencies]

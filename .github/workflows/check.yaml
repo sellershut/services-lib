@@ -12,13 +12,13 @@ name: check
 jobs:
   fmt:
     runs-on: ubuntu-latest
-    name: nightly / fmt
+    name: stable / fmt
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - name: Install nightly
-        uses: dtolnay/rust-toolchain@nightly
+      - name: Install stable
+        uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt
       - name: cargo fmt --check
@@ -32,7 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        toolchain: [nightly, beta]
+        toolchain: [stable, beta]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -54,8 +54,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - name: Install nightly
-        uses: dtolnay/rust-toolchain@nightly
+      - name: Install stable
+        uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt
       - name: cargo-semver-checks
@@ -75,13 +75,13 @@ jobs:
         run: cargo docs-rs
   hack:
     runs-on: ubuntu-latest
-    name: ubuntu / nightly / features
+    name: ubuntu / stable / features
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - name: Install nightly
-        uses: dtolnay/rust-toolchain@nightly
+      - name: Install stable
+        uses: dtolnay/rust-toolchain@stable
       - name: cargo install cargo-hack
         uses: taiki-e/install-action@cargo-hack
       - name: cargo hack
@@ -97,7 +97,7 @@ jobs:
         with:
           submodules: true
       - name: Install ${{ matrix.msrv }}
-        uses: dtolnay/rust-toolchain@nightly
+        uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.msrv }}
       - name: cargo +${{ matrix.msrv }} check

@@ -1,5 +1,5 @@
 use tracing_subscriber::{
-    EnvFilter, Layer, Registry, layer::SubscriberExt, util::SubscriberInitExt,
+    layer::SubscriberExt, util::SubscriberInitExt, EnvFilter, Layer, Registry,
 };
 
 /// Telemetry handle

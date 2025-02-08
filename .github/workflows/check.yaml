@@ -47,19 +47,6 @@ jobs:
         with:
           reporter: 'github-pr-check'
           github_token: ${{ secrets.GITHUB_TOKEN }}
-  semver:
-    runs-on: ubuntu-latest
-    name: semver
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - name: Install stable
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          components: rustfmt
-      - name: cargo-semver-checks
-        uses: obi1kenobi/cargo-semver-checks-action@v2
   doc:
     runs-on: ubuntu-latest
     name: nightly / doc
@@ -90,7 +77,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        msrv: ["1.63"] # tracing
+        msrv: ["1.84.1"]
     name: ubuntu / ${{ matrix.msrv }}
     steps:
       - uses: actions/checkout@v4

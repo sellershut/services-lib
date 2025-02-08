@@ -47,3 +47,14 @@ impl TracingBuilder {
         Tracing {}
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn build() {
+        let builder = Tracing::builder();
+        builder.build(Some("warn".into()));
+    }
+}

@@ -47,7 +47,16 @@ jobs:
           submodules: true
       - name: Install stable
         uses: dtolnay/rust-toolchain@stable
+      - name: setup docker
+        if: runner.os == 'macos'
+        run: |
+          brew install docker docker-compose
+          # Link the Docker Compose v2 plugin so it's understood by the docker CLI
+          mkdir -p ~/.docker/cli-plugins
+          ln -sfn /usr/local/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
+          colima start
       - name: start docker stack
+        if: runner.os == 'macos'
         run: docker compose -f examples/compose.yaml up -d
       - name: cargo generate-lockfile
         if: hashFiles('Cargo.lock') == ''
@@ -55,6 +64,7 @@ jobs:
       - name: cargo test
         run: cargo test --locked --all-features --all-targets
       - name: stop docker stack
+        if: runner.os == 'macos'
         run: docker compose -f examples/compose.yaml down -v
   coverage:
     runs-on: ubuntu-latest

@@ -83,7 +83,7 @@ impl<S: State> ServicesBuilder<S> {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, not(target_family = "windows")))]
 mod test {
     use super::*;
     use crate::Services;

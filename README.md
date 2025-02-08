@@ -12,4 +12,5 @@ Configure the infrastructure used by the sellershut platform
 
 ## Features
 
-- `tracing` - Structured, context-aware logging using [tracing](https://docs.rs/tracing).
+- `tracing` - Structured, context-aware logging using [tracing](https://docs.rs/tracing)
+- `postgres` - Configure a postgres database with [sqlx](https://docs.rs/sqlx)

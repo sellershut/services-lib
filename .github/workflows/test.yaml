@@ -10,6 +10,18 @@ concurrency:
 name: test
 jobs:
   required:
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     runs-on: ubuntu-latest
     name: ubuntu / ${{ matrix.toolchain }}
     strategy:
@@ -31,6 +43,18 @@ jobs:
       - name: cargo test --doc
         run: cargo test --locked --all-features --doc
   os-check:
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} / stable
     strategy:
@@ -49,6 +73,18 @@ jobs:
       - name: cargo test
         run: cargo test --locked --all-features --all-targets
   coverage:
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     runs-on: ubuntu-latest
     name: ubuntu / stable / coverage
     steps:

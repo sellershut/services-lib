@@ -5,11 +5,26 @@ edition = "2021"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
+bon = "3.3.2"
+secrecy = { version = "0.10.3", features = ["serde"] }
+serde = { version = "1.0.217", features = ["derive", "rc"] }
+sqlx = { version = "0.8.3", optional = true }
+thiserror = "2.0.11"
 tracing = { version = "0.1.41", optional = true }
-tracing-subscriber = { version = "0.3.19", features = ["env-filter"], optional = true }
+tracing-subscriber = { version = "0.3.19", features = [
+    "env-filter",
+], optional = true }
+url = { version = "2.5.4", features = ["serde"], optional = true }
 
 [features]
+default = []
 tracing = ["dep:tracing", "dep:tracing-subscriber"]
+postgres = ["sqlx/postgres", "url/serde"]
+url = ["dep:url"]
+
+[dev-dependencies]
+tokio = { version = "1.43.0", features = ["macros", "rt"] }
+sqlx = { version = "*", features = ["runtime-tokio"] }
 
 [package.metadata.docs.rs]
 all-features = true

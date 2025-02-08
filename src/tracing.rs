@@ -7,7 +7,12 @@ use tracing_subscriber::{
 pub struct Tracing {}
 
 impl Tracing {
-    /// Create a new builder
+    /// Create a new [builder](TracingBuilder)
+    /// # Examples
+    /// ```
+    /// # use sellershut_services::tracing::Tracing;
+    /// let _tracing = Tracing::builder();
+    /// ```
     pub fn builder() -> TracingBuilder {
         TracingBuilder::default()
     }
@@ -27,13 +32,23 @@ impl Default for TracingBuilder {
 
 impl TracingBuilder {
     /// Create a new builder
+    /// # Examples
+    /// ```
+    /// # use sellershut_services::tracing::TracingBuilder;
+    /// let _tracing = TracingBuilder::new();
+    /// ```
     pub fn new() -> Self {
         let types: Box<dyn Layer<Registry> + Sync + Send> =
             tracing_subscriber::fmt::layer().boxed();
         TracingBuilder { layer: vec![types] }
     }
 
-    /// Initialises tracing
+    /// Initialises tracing with the provided level
+    /// # Examples
+    /// ```
+    /// # use sellershut_services::tracing::TracingBuilder;
+    /// let _tracing = TracingBuilder::new().build(None);
+    /// ```
     pub fn build(self, level: Option<std::sync::Arc<str>>) -> Tracing {
         let level = if let Some(level) = level {
             level.to_string()

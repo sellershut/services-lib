@@ -36,10 +36,14 @@ pub enum Environment {
 
 impl Display for Environment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", match self {
-            Environment::Development => "development",
-            Environment::Production => "production",
-        })
+        write!(
+            f,
+            "{}",
+            match self {
+                Environment::Development => "development",
+                Environment::Production => "production",
+            }
+        )
     }
 }
 

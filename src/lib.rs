@@ -8,6 +8,9 @@ pub mod tracing;
 #[cfg_attr(docsrs, doc(cfg(feature = "postgres")))]
 pub mod postgres;
 
+mod config;
+pub use config::*;
+
 #[derive(Clone, bon::Builder)]
 pub struct Services {
     #[cfg(feature = "postgres")]

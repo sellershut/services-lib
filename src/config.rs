@@ -20,12 +20,12 @@ pub struct AppConfig {
 }
 
 #[cfg(feature = "api")]
-fn default_port() -> u16 {
+pub(crate) fn default_port() -> u16 {
     2210
 }
 
 #[cfg(feature = "tracing")]
-fn default_log() -> Option<Arc<str>> {
+pub(crate) fn default_log() -> Option<Arc<str>> {
     #[cfg(debug_assertions)]
     return Some("debug".into());
     #[cfg(not(debug_assertions))]
@@ -99,5 +99,13 @@ mod tests {
 
         let prod = Environment::Production;
         assert_eq!(format!("{}", prod), "production");
+    }
+
+    #[test]
+    #[cfg(feature = "api")]
+    fn test_port() {
+        let listen_address =
+            std::net::SocketAddr::from((std::net::Ipv6Addr::UNSPECIFIED, default_port()));
+        assert_eq!(listen_address.port(), default_port());
     }
 }

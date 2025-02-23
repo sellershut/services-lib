@@ -70,6 +70,7 @@ mod tests {
     #[test]
     fn build() {
         let builder = Tracing::builder();
-        builder.build(Some("warn".into()));
+        let level = crate::config::default_log();
+        builder.build(level);
     }
 }

@@ -106,11 +106,11 @@ mod test {
 
     #[tokio::test]
     async fn docker_sellershut_db() {
-        let port = 5432;
+        let port = default_port();
         let name = "";
         let host = "localhost";
-        let user = "postgres";
-        let pool_size = 100;
+        let user = user();
+        let pool_size = default_pool_size();
         let password = "postgres";
 
         let config = PostgresConfig {
@@ -118,13 +118,13 @@ mod test {
             port,
             name: name.into(),
             host: host.into(),
-            user: user.into(),
+            user: user.clone().into(),
             password: secrecy::SecretString::new(password.into()),
         };
 
         assert_eq!(config.name(), name);
         assert_eq!(config.pool_size(), pool_size);
-        assert_eq!(config.username(), user);
+        assert_eq!(config.username(), user.as_ref());
         assert_eq!(config.host(), host);
         assert_eq!(config.port(), port);
 

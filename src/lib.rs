@@ -8,6 +8,8 @@ pub mod tracing;
 #[cfg_attr(docsrs, doc(cfg(feature = "postgres")))]
 pub mod postgres;
 
+pub mod utils;
+
 mod config;
 pub use config::*;
 

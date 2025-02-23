@@ -6,6 +6,7 @@ license = "MIT OR Apache-2.0"
 
 [dependencies]
 bon = "3.3.2"
+nanoid = { version = "0.4.0", optional = true }
 secrecy = { version = "0.10.3", features = ["serde"] }
 serde = { version = "1.0.217", features = ["derive", "rc"] }
 serde_json = "1.0.138"
@@ -20,6 +21,7 @@ url = { version = "2.5.4", features = ["serde"], optional = true }
 [features]
 default = []
 api = []
+id-gen = ["dep:nanoid"]
 postgres = ["sqlx/postgres", "url/serde"]
 tracing = ["dep:tracing", "dep:tracing-subscriber"]
 url = ["dep:url"]

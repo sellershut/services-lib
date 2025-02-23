@@ -11,12 +11,27 @@ use crate::{
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct PostgresConfig {
+    #[serde(default = "default_pool_size")]
     pool_size: u32,
-    port: u16,
+    #[serde(default = "default_port")]
+    port: u32,
     name: Arc<str>,
     host: Arc<str>,
+    #[serde(default = "user")]
     user: Arc<str>,
     password: SecretString,
+}
+
+fn default_pool_size() -> u32 {
+    100
+}
+
+fn user() -> Arc<str> {
+    "postgres".into()
+}
+
+fn default_port() -> u32 {
+    5432
 }
 
 impl PostgresConfig {
@@ -26,7 +41,7 @@ impl PostgresConfig {
     }
 
     // Getter for port
-    pub fn port(&self) -> u16 {
+    pub fn port(&self) -> u32 {
         self.port
     }
 
@@ -75,7 +90,8 @@ impl<S: State> ServicesBuilder<S> {
             // The default connection limit for a Postgres server is 100 connections, with 3 reserved for superusers.
             //
             // If you're deploying your application with multiple replicas, then the total
-            // across all replicas should not exceed the Postgres connection limit.
+            // across all replicas should not exceed the Postgres connection limit
+            // (max_connections postgresql.conf).
             .max_connections(config.pool_size)
             .connect(config.connection_string()?.as_ref())
             .await?;

@@ -8,13 +8,28 @@ pub struct AppConfig {
     pub name: Arc<str>,
     #[serde(skip)]
     pub version: Arc<str>,
+    #[serde(default)]
     pub env: Environment,
     #[cfg(feature = "api")]
+    #[serde(default = "default_port")]
     pub port: u16,
-    #[serde(default)]
     #[serde(rename = "log-level")]
     #[cfg(feature = "tracing")]
+    #[serde(default = "default_log")]
     pub log_level: Option<Arc<str>>,
+}
+
+#[cfg(feature = "api")]
+fn default_port() -> u16 {
+    2210
+}
+
+#[cfg(feature = "tracing")]
+fn default_log() -> Option<Arc<str>> {
+    #[cfg(debug_assertions)]
+    return Some("debug".into());
+    #[cfg(not(debug_assertions))]
+    Some("info".into())
 }
 
 #[derive(Clone, Debug, Deserialize)]
@@ -26,10 +41,11 @@ pub struct Configuration {
     pub misc: serde_json::Value,
 }
 
-#[derive(Clone, Copy, Debug, Deserialize, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Deserialize, PartialEq, Eq, Default)]
 #[cfg_attr(test, derive(serde::Serialize))]
 #[serde(rename_all = "lowercase")]
 pub enum Environment {
+    #[default]
     Development,
     Production,
 }

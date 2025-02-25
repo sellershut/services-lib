@@ -5,8 +5,8 @@ use serde::Deserialize;
 use url::Url;
 
 use crate::{
-    services_builder::{IsUnset, SetPostgres, State},
     ServicesBuilder,
+    services_builder::{IsUnset, SetPostgres, State},
 };
 
 #[derive(Debug, Deserialize, Clone)]
